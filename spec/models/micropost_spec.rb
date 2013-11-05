@@ -28,4 +28,9 @@ describe Micropost do
     before { @micropost.content = "a" * 141 }
     it { should_not be_valid }
   end
+
+  describe "when user_id is not present in track" do
+    before { @track.user_id = nil }
+    it { should_not be_valid }
+  end
 end

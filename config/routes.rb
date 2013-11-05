@@ -5,7 +5,7 @@ SampleApp::Application.routes.draw do
     end
   end
   resources :sessions,      only: [:new, :create, :destroy]
-  resources :microposts,    only: [:create, :destroy]
+  resources :tracks,    only: [:show, :create, :destroy]
   resources :relationships, only: [:create, :destroy]
   root  'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'

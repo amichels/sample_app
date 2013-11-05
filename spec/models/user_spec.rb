@@ -188,4 +188,28 @@ describe User do
     end
   end
 
+  describe "track associations" do
+
+    before { @user.save }
+    let!(:older_track) do
+      FactoryGirl.create(:track, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_track) do
+      FactoryGirl.create(:track, user: @user, created_at: 1.hour.ago)
+    end
+
+    it "should have the right tracks in the right order" do
+      expect(@user.tracks.to_a).to eq [newer_track, older_track]
+    end
+
+    it "should destroy associated tracks" do
+      tracks = @user.tracks.to_a
+      @user.destroy
+      expect(tracks).not_to be_empty
+      tracks.each do |track|
+        expect(Track.where(id: track.id)).to be_empty
+      end
+    end
+  end
+
 end
